@@ -10,14 +10,197 @@
 */
 
 #pragma once
+#include "MainComponent.h"
 
 //Gui for nav bar
-class Nav_Bar : public juce::AnimatedAppComponent
+class Nav_Bar : public juce::AnimatedAppComponent, public juce::ChangeBroadcaster, public juce::Button::Listener
 {
 public:
     //==============================================================================
     Nav_Bar()
     {
+        //create images for oscillator button
+        const juce::Image osc_img = juce::ImageCache::getFromMemory(BinaryData::osc_png,BinaryData::osc_pngSize);
+        const juce::Image osc_hover_img = juce::ImageCache::getFromMemory(BinaryData::osc_hover_png,BinaryData::osc_hover_pngSize);
+        const juce::Image osc_clicked_img = juce::ImageCache::getFromMemory(BinaryData::osc_clicked_png,BinaryData::osc_clicked_pngSize);
+        
+        //setup ocs select button
+        select_osc.setImages(false, true, false, osc_img, 1.0f, juce::Colours::transparentBlack, osc_hover_img, 1.0f, juce::Colours::transparentBlack, osc_clicked_img, 1.0f, juce::Colours::black);
+        
+        //create images for oscillator button
+        const juce::Image filt_img = juce::ImageCache::getFromMemory(BinaryData::filt_png,BinaryData::filt_pngSize);
+        const juce::Image filt_hover_img = juce::ImageCache::getFromMemory(BinaryData::filt_hover_png,BinaryData::filt_hover_pngSize);
+        const juce::Image filt_clicked_img = juce::ImageCache::getFromMemory(BinaryData::filt_clicked_png,BinaryData::filt_clicked_pngSize);
+        
+        //setup filter select button
+        select_filt.setImages(false, true,false, filt_img, 1.0f, juce::Colours::transparentBlack, filt_hover_img, 1.0f, juce::Colours::transparentBlack, filt_clicked_img, 1.0f, juce::Colours::black);
+        
+       //create images for amplifier button
+        const juce::Image amp_img = juce::ImageCache::getFromMemory(BinaryData::amp_png,BinaryData::amp_pngSize);
+        const juce::Image amp_hover_img = juce::ImageCache::getFromMemory(BinaryData::amp_hover_png,BinaryData::amp_hover_pngSize);
+        const juce::Image amp_clicked_img = juce::ImageCache::getFromMemory(BinaryData::amp_clicked_png,BinaryData::amp_clicked_pngSize);
+
+        //setup amplifier select button
+        select_amp.setImages(false, true, false, amp_img, 1.0f, juce::Colours::transparentBlack, amp_hover_img, 1.0f, juce::Colours::transparentBlack, amp_clicked_img, 1.0f, juce::Colours::black);
+        
+        //setup 
+        addAndMakeVisible(select_osc);
+        addAndMakeVisible(select_filt);
+        addAndMakeVisible(select_amp);
+        
+        //add button listners
+        select_osc.addListener(this);
+        select_filt.addListener(this);
+        select_amp.addListener(this);
+        
+    }
+    
+    ~Nav_Bar(){
+        //remove button listners
+        select_osc.removeListener(this);
+        select_filt.removeListener(this);
+        select_amp.removeListener(this);
+    }
+    
+    
+
+    void update() override
+    {
+        // This function is called at the frequency specified by the setFramesPerSecond() call
+        // in the constructor. You can use it to update counters, animate values, etc.
+    }
+
+    void paint (juce::Graphics& g) override
+    {
+        // (Our component is opaque, so we must completely fill the background with a solid colour)
+        g.fillAll (juce::Colours::darkcyan);
+        g.setColour (juce::Colours::peachpuff);
+    }
+
+    void resized() override
+    {
+        
+        //get total area of nav bar
+        auto area = getLocalBounds();
+        
+        //each button takes one third of nav area
+        select_osc.setBounds(area.removeFromTop(getHeight()/3));
+        select_filt.setBounds(area.removeFromTop(getHeight()/3));
+        select_amp.setBounds(area.removeFromTop(getHeight()/3));
+        
+        
+    }
+    juce::ImageButton select_osc;
+    juce::ImageButton select_filt;
+    juce::ImageButton select_amp;
+    
+    void buttonClicked (juce::Button* button) override
+    {
+        if (button == &select_osc)                                                      // [3]
+        {
+            selected_screen = 0;
+        }
+        
+        if (button == &select_filt)                                                      // [3]
+        {
+            selected_screen = 1;
+        }
+        
+        if (button == &select_amp)                                                      // [3]
+        {
+            selected_screen = 2;
+        }
+        sendChangeMessage();
+    }
+    
+    int get_button_click()
+    {
+        return selected_screen;
+    }
+
+private:
+    int selected_screen = 0;
+    //==============================================================================
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Nav_Bar)
+};
+
+//gui for oscillator menu
+class Oscillator_Menu : public juce::AnimatedAppComponent
+{
+public:
+    //==============================================================================
+    Oscillator_Menu()
+    {
+        //set labels text
+        osc1_wav_shape_label.setText("Osc 1 Wave Shape", juce::dontSendNotification);
+        osc2_wav_shape_label.setText("Osc 2 Wave Shape", juce::dontSendNotification);
+        osc3_wav_shape_label.setText("Osc 3 Wave Shape", juce::dontSendNotification);
+        
+        //set combo box items
+        osc1_wav_shape.addItem("Sine",1);
+        osc1_wav_shape.addItem("Saw",2);
+        osc1_wav_shape.addItem("Square",3);
+        osc1_wav_shape.addItem("Triangle",4);
+        
+        osc2_wav_shape.addItem("Sine",1);
+        osc2_wav_shape.addItem("Saw",2);
+        osc2_wav_shape.addItem("Square",3);
+        osc2_wav_shape.addItem("Triangle",4);
+        
+        osc3_wav_shape.addItem("Sine",1);
+        osc3_wav_shape.addItem("Saw",2);
+        osc3_wav_shape.addItem("Square",3);
+        osc3_wav_shape.addItem("Triangle",4);
+        
+        //set freq slider settings
+        osc1_frequency.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+        osc1_frequency.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
+        osc1_frequency.setTextValueSuffix (" Frequency (Hz)");
+        osc1_frequency.setRange(20, 20000);
+        
+        osc2_frequency.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+        osc2_frequency.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
+        osc2_frequency.setTextValueSuffix (" Frequency (Hz)");
+        osc2_frequency.setRange(20, 20000);
+        
+        osc3_frequency.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+        osc3_frequency.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
+        osc3_frequency.setTextValueSuffix (" Frequency (Hz)");
+        osc3_frequency.setRange(20, 20000);
+        
+        //set gain slider settings
+        osc1_gain.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+        osc1_gain.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
+        osc1_gain.setTextValueSuffix (" gain (dB)");
+        osc1_gain.setRange(0, 100);
+        
+        osc2_gain.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+        osc2_gain.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
+        osc2_gain.setTextValueSuffix (" gain (dB)");
+        osc2_gain.setRange(0, 100);
+        
+        osc3_gain.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+        osc3_gain.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
+        osc3_gain.setTextValueSuffix (" gain (dB)");
+        osc3_gain.setRange(0, 100);
+        
+        
+        //add child components
+        addAndMakeVisible(osc1_wav_shape_label);
+        addAndMakeVisible(osc1_wav_shape);
+        addAndMakeVisible(osc1_frequency);
+        addAndMakeVisible(osc1_gain);
+        
+        addAndMakeVisible(osc2_wav_shape_label);
+        addAndMakeVisible(osc2_wav_shape);
+        addAndMakeVisible(osc2_frequency);
+        addAndMakeVisible(osc2_gain);
+        
+        addAndMakeVisible(osc3_wav_shape_label);
+        addAndMakeVisible(osc3_wav_shape);
+        addAndMakeVisible(osc3_frequency);
+        addAndMakeVisible(osc3_gain);
+        
     }
 
     void update() override
@@ -29,23 +212,99 @@ public:
     void paint (juce::Graphics& g) override
     {
         // (Our component is opaque, so we must completely fill the background with a solid colour)
-        g.fillAll (juce::Colours::silver);
+        g.fillAll (juce::Colours::darkgrey);
         g.setColour (juce::Colours::peachpuff);
-        g.drawText("Nav Bar",getLocalBounds(), juce::Justification::centred, true);
     }
 
     void resized() override
     {
+        //get total area of nav bar
+        auto area = getLocalBounds();
         
-        // This is called when the MainContentComponent is resized.
-        // If you add any child components, this is where you should
-        // update their positions.
+        //flexboxes to organize items
+        juce::FlexBox fb;
+        juce::FlexBox row1;
+        juce::FlexBox row2;
+        juce::FlexBox row3;
+        
+        
+        //set rows on vertical axis direction
+        fb.flexDirection = juce::FlexBox::Direction::row;
+        row1.flexDirection = juce::FlexBox::Direction::column;
+        row2.flexDirection = juce::FlexBox::Direction::column;
+        row3.flexDirection = juce::FlexBox::Direction::column;
+        
+        //set wrapping of flex boxes
+        fb.flexWrap = juce::FlexBox::Wrap::wrap;
+        row1.flexWrap = juce::FlexBox::Wrap::noWrap;
+        row2.flexWrap = juce::FlexBox::Wrap::noWrap;
+        row3.flexWrap = juce::FlexBox::Wrap::noWrap;
+        
+        //set content justification (main axis)
+        fb.justifyContent = juce::FlexBox::JustifyContent::flexStart;
+        row1.justifyContent = juce::FlexBox::JustifyContent::flexStart;
+        row2.justifyContent = juce::FlexBox::JustifyContent::flexStart;
+        row3.justifyContent = juce::FlexBox::JustifyContent::flexStart;
+        
+        //set content alignment (cross axis)
+        fb.alignContent = juce::FlexBox::AlignContent::flexStart;
+        row1.alignContent = juce::FlexBox::AlignContent::flexStart;
+        row2.alignContent = juce::FlexBox::AlignContent::flexStart;
+        row3.alignContent = juce::FlexBox::AlignContent::flexStart;
+        
+        auto osc_label_height = area.getHeight()/10;
+        auto osc_type_height = area.getHeight()/10;
+        auto osc_slider_height = 5*area.getHeight()/10;
+        auto osc_knob_height = 3*area.getHeight()/10;
+        
+        //add items to rown1
+        row1.items.add(juce::FlexItem(osc1_wav_shape_label).withMinWidth(area.getWidth()/3).withMinHeight(osc_label_height));
+        row1.items.add(juce::FlexItem(osc1_wav_shape).withMinWidth(area.getWidth()/3).withMinHeight(osc_type_height));
+        row1.items.add(juce::FlexItem(osc1_frequency).withMinWidth(area.getWidth()/3 ).withMinHeight(osc_slider_height));
+        row1.items.add(juce::FlexItem(osc1_gain).withMinWidth(area.getWidth()/3 ).withMinHeight(osc_knob_height));
+        
+        //add items to rown2
+        row2.items.add(juce::FlexItem(osc2_wav_shape_label).withMinWidth(area.getWidth()/3).withMinHeight(osc_label_height));
+        row2.items.add(juce::FlexItem(osc2_wav_shape).withMinWidth(area.getWidth()/3).withMinHeight(osc_type_height));
+        row2.items.add(juce::FlexItem(osc2_frequency).withMinWidth(area.getWidth()/3 ).withMinHeight(osc_slider_height));
+        row2.items.add(juce::FlexItem(osc2_gain).withMinWidth(area.getWidth()/3 ).withMinHeight(osc_knob_height));
+        
+        //add items to rown3
+        row3.items.add(juce::FlexItem(osc3_wav_shape_label).withMinWidth(area.getWidth()/3).withMinHeight(osc_label_height));
+        row3.items.add(juce::FlexItem(osc3_wav_shape).withMinWidth(area.getWidth()/3).withMinHeight(osc_type_height));
+        row3.items.add(juce::FlexItem(osc3_frequency).withMinWidth(area.getWidth()/3 ).withMinHeight(osc_slider_height));
+        row3.items.add(juce::FlexItem(osc3_gain).withMinWidth(area.getWidth()/3 ).withMinHeight(osc_knob_height));
+        
+        
+        //add items to main flex box
+        fb.items.add(juce::FlexItem(row1).withFlex(1.0));
+        fb.items.add(juce::FlexItem(row2).withFlex(1.0));
+        fb.items.add(juce::FlexItem(row3).withFlex(1.0));
+        
+        fb.performLayout (getLocalBounds().reduced(10).toFloat());
+
     }
 
 private:
-    juce::TextButton
+    //create components for oscillator 1
+    juce::Label osc1_wav_shape_label;
+    juce::ComboBox osc1_wav_shape;
+    juce::Slider osc1_frequency;
+    juce::Slider osc1_gain;
+    
+    juce::Label osc2_wav_shape_label;
+    juce::ComboBox osc2_wav_shape;
+    juce::Slider osc2_frequency;
+    juce::Slider osc2_gain;
+    
+    //create components for oscillator 3
+    juce::Label osc3_wav_shape_label;
+    juce::ComboBox osc3_wav_shape;
+    juce::Slider osc3_frequency;
+    juce::Slider osc3_gain;
+    
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Nav_Bar)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Oscillator_Menu)
 };
 
 //gui for filter menu
@@ -66,20 +325,50 @@ public:
     void paint (juce::Graphics& g) override
     {
         // (Our component is opaque, so we must completely fill the background with a solid colour)
-        g.fillAll (juce::Colours::lavenderblush);
+        g.fillAll (juce::Colours::darkgrey);
         g.setColour (juce::Colours::peachpuff);
         g.drawText("Filter MENU",getLocalBounds(), juce::Justification::centred, true);
     }
 
     void resized() override
     {
-        
-        // This is called when the MainContentComponent is resized.
-        // If you add any child components, this is where you should
-        // update their positions.
+
     }
 
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Filter_Menu)
+};
+
+//gui for amplifier menu
+class amplifier_Menu : public juce::AnimatedAppComponent
+{
+public:
+    //==============================================================================
+    amplifier_Menu()
+    {
+    }
+
+    void update() override
+    {
+        // This function is called at the frequency specified by the setFramesPerSecond() call
+        // in the constructor. You can use it to update counters, animate values, etc.
+    }
+
+    void paint (juce::Graphics& g) override
+    {
+        // (Our component is opaque, so we must completely fill the background with a solid colour)
+        g.fillAll (juce::Colours::darkgrey);
+        g.setColour (juce::Colours::peachpuff);
+        g.drawText("Amplifier MENU",getLocalBounds(), juce::Justification::centred, true);
+    }
+
+    void resized() override
+    {
+
+    }
+
+private:
+    //==============================================================================
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (amplifier_Menu)
 };

@@ -5,9 +5,22 @@ MainComponent::MainComponent()
 {
     // Make sure you set the size of the component after
     // you add any child components.
-    addAndMakeVisible (fMenu);
+    
+    //add child components
+    addChildComponent(oMenu);
+    addChildComponent(fMenu);
+    addChildComponent(aMenu);
+    
     addAndMakeVisible(nBar);
-    setSize (800, 600);
+    
+    //only oscilattior menu is on by default
+    oMenu.setVisible(true);
+    
+    //listen to navbar changes
+    nBar.addChangeListener(this);
+    
+    //set default window size
+    setSize(800, 600);
 
     // Some platforms require permissions to open input channels so request that here
     if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
@@ -26,6 +39,7 @@ MainComponent::MainComponent()
 MainComponent::~MainComponent()
 {
     // This shuts down the audio device and clears the audio source.
+    nBar.removeChangeListener(this);
     shutdownAudio();
 }
 
@@ -65,6 +79,7 @@ void MainComponent::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    g.setColour (juce::Colours::black);
 
     // You can add your drawing code here!
 }
@@ -74,12 +89,35 @@ void MainComponent::resized()
     //get the local area
     auto area = getLocalBounds();
     
-    auto nav_width = getWidth() < 150 ? getWidth() /4 : 150;
+    auto nav_width = getWidth() < 150 ? getWidth() /3 : 150;
     
     //set areas of things
     nBar.setBounds(area.removeFromLeft(nav_width));
     fMenu.setBounds(area);
+    oMenu.setBounds(area);
+    aMenu.setBounds(area);
     // This is called when the MainContentComponent is resized.
     // If you add any child components, this is where you should
     // update their positions.
 }
+
+void MainComponent::changeListenerCallback(juce::ChangeBroadcaster* source)
+    {
+        oMenu.setVisible(false);
+        fMenu.setVisible(false);
+        aMenu.setVisible(false);
+        if(source == &nBar){
+            switch(nBar.get_button_click()){
+                case 0:
+                    oMenu.setVisible(true);
+                    break;
+                case 1:
+                    fMenu.setVisible(true);
+                    break;
+                case 2:
+                    aMenu.setVisible(true);
+                    break;
+            };
+        }
+        repaint();
+    }

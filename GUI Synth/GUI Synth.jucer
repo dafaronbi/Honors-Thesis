@@ -11,6 +11,20 @@
       <FILE id="TJ5Opt" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
     </GROUP>
+    <FILE id="caT1L9" name="amp.png" compile="0" resource="1" file="img/amp.png"/>
+    <FILE id="tjOdtl" name="amp_clicked.png" compile="0" resource="1" file="img/amp_clicked.png"/>
+    <FILE id="FAlE7L" name="amp_hover.png" compile="0" resource="1" file="img/amp_hover.png"/>
+    <FILE id="en9JXA" name="filt.png" compile="0" resource="1" file="img/filt.png"/>
+    <FILE id="fDBGtG" name="filt_clicked.png" compile="0" resource="1"
+          file="img/filt_clicked.png"/>
+    <FILE id="O3DBEP" name="filt_hover.png" compile="0" resource="1" file="img/filt_hover.png"/>
+    <FILE id="weIMky" name="filter.png" compile="0" resource="1" file="img/filter.png"/>
+    <FILE id="gth3ZO" name="osc.png" compile="0" resource="1" file="img/osc.png"/>
+    <FILE id="ry8QLr" name="osc_clicked.png" compile="0" resource="1" file="img/osc_clicked.png"/>
+    <FILE id="isLGjO" name="osc_hover.png" compile="0" resource="1" file="img/osc_hover.png"/>
+    <FILE id="VM6lSv" name="speaker.jpeg" compile="0" resource="1" file="img/speaker.jpeg"/>
+    <FILE id="ROh9IE" name="wave.jpeg" compile="0" resource="1" file="img/wave.jpeg"
+          xcodeResource="0"/>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
   <EXPORTFORMATS>
