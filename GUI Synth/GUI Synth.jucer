@@ -4,6 +4,7 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="dF3eop" name="GUI Synth">
     <GROUP id="{E7F4C876-AF41-304B-D388-C75F6291E728}" name="Source">
+      <FILE id="nT0i10" name="sliders.h" compile="0" resource="0" file="Source/sliders.h"/>
       <FILE id="tCmA2i" name="extraComponents.h" compile="0" resource="0"
             file="Source/extraComponents.h"/>
       <FILE id="MaEJGg" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
