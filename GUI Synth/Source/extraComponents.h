@@ -10,7 +10,8 @@
 */
 
 #pragma once
-#include "MainComponent.h"
+#include <JuceHeader.h>
+#include "sliders.h"
 
 //Gui for nav bar
 class Nav_Bar : public juce::AnimatedAppComponent, public juce::ChangeBroadcaster, public juce::Button::Listener
@@ -128,6 +129,24 @@ private:
 class Oscillator_Menu : public juce::AnimatedAppComponent
 {
 public:
+    //create components for oscillator 1
+    juce::Label osc1_wav_shape_label;
+    juce::ComboBox osc1_wav_shape;
+    juce::Slider osc1_frequency;
+    gain_slider osc1_gain;
+    
+    //create components for oscillator 2
+    juce::Label osc2_wav_shape_label;
+    juce::ComboBox osc2_wav_shape;
+    juce::Slider osc2_frequency;
+    gain_slider  osc2_gain;
+    
+    //create components for oscillator 3
+    juce::Label osc3_wav_shape_label;
+    juce::ComboBox osc3_wav_shape;
+    juce::Slider osc3_frequency;
+    gain_slider  osc3_gain;
+    
     //==============================================================================
     Oscillator_Menu()
     {
@@ -178,17 +197,17 @@ public:
         osc1_gain.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
         osc1_gain.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
         osc1_gain.setTextValueSuffix (" gain (dB)");
-        osc1_gain.setRange(0, 100);
+        osc1_gain.setRange(-100, 50);
         
         osc2_gain.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
         osc2_gain.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
         osc2_gain.setTextValueSuffix (" gain (dB)");
-        osc2_gain.setRange(0, 100);
+        osc2_gain.setRange(-100, 50);
         
         osc3_gain.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
         osc3_gain.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
         osc3_gain.setTextValueSuffix (" gain (dB)");
-        osc3_gain.setRange(0, 100);
+        osc3_gain.setRange(-100, 50);
         
         
         //add child components
@@ -292,23 +311,6 @@ public:
     }
 
 private:
-    //create components for oscillator 1
-    juce::Label osc1_wav_shape_label;
-    juce::ComboBox osc1_wav_shape;
-    juce::Slider osc1_frequency;
-    juce::Slider osc1_gain;
-    
-    //create components for oscillator 2
-    juce::Label osc2_wav_shape_label;
-    juce::ComboBox osc2_wav_shape;
-    juce::Slider osc2_frequency;
-    juce::Slider osc2_gain;
-    
-    //create components for oscillator 3
-    juce::Label osc3_wav_shape_label;
-    juce::ComboBox osc3_wav_shape;
-    juce::Slider osc3_frequency;
-    juce::Slider osc3_gain;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Oscillator_Menu)
@@ -318,6 +320,25 @@ private:
 class Filter_Menu : public juce::AnimatedAppComponent
 {
 public:
+    
+    //create components for filter 1
+    juce::Label filter1_label;
+    juce::ComboBox filter1_type;
+    juce::Slider filter1_cuttoff_freq;
+    juce::Slider filter1_resonance;
+    
+    //create components for filter 2
+    juce::Label filter2_label;
+    juce::ComboBox filter2_type;
+    juce::Slider filter2_cuttoff_freq;
+    juce::Slider filter2_resonance;
+    
+    //create components for  asdr
+    juce::Slider filter_attack;
+    juce::Slider filter_decay;
+    juce::Slider filter_sustain;
+    juce::Slider filter_release;
+    
     //==============================================================================
     Filter_Menu()
     {
@@ -482,23 +503,6 @@ public:
     }
 
 private:
-    //create components for filter 1
-    juce::Label filter1_label;
-    juce::ComboBox filter1_type;
-    juce::Slider filter1_cuttoff_freq;
-    juce::Slider filter1_resonance;
-    
-    //create components for filter 2
-    juce::Label filter2_label;
-    juce::ComboBox filter2_type;
-    juce::Slider filter2_cuttoff_freq;
-    juce::Slider filter2_resonance;
-    
-    //create components for  asdr
-    juce::Slider filter_attack;
-    juce::Slider filter_decay;
-    juce::Slider filter_sustain;
-    juce::Slider filter_release;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Filter_Menu)
@@ -508,6 +512,16 @@ private:
 class amplifier_Menu : public juce::AnimatedAppComponent
 {
 public:
+    //create components for amplifier
+    gain_slider  amp_total_gain;
+    
+    //create components for  asdr
+    juce::Slider amp_attack;
+    juce::Slider amp_decay;
+    juce::Slider amp_sustain;
+    juce::Slider amp_release;
+    
+    
     //==============================================================================
     amplifier_Menu()
     {
@@ -516,7 +530,7 @@ public:
         amp_total_gain.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
         amp_total_gain.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
         amp_total_gain.setTextValueSuffix (" Total Gain (dB)");
-        amp_total_gain.setRange(0, 20);
+        amp_total_gain.setRange(-100, 50);
         
         //set asdr slider settings
         amp_attack.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
@@ -615,15 +629,6 @@ public:
     }
 
 private:
-    //create components for amplifier
-    juce::Slider amp_total_gain;
-    
-    //create components for  asdr
-    juce::Slider amp_attack;
-    juce::Slider amp_decay;
-    juce::Slider amp_sustain;
-    juce::Slider amp_release;
-    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (amplifier_Menu)
 };

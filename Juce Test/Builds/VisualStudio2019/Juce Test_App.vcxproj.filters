@@ -194,6 +194,24 @@
     <Filter Include="JUCE Modules\juce_gui_basics">
       <UniqueIdentifier>{3C206A40-6F1B-E683-ACF1-DEC3703D0140}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_gui_extra\code_editor">
+      <UniqueIdentifier>{DF95D4BF-E18C-125A-5EBB-8993A06E232C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_gui_extra\documents">
+      <UniqueIdentifier>{118946F2-AC24-0F09-62D5-753DF87A60CD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_gui_extra\embedding">
+      <UniqueIdentifier>{07329F9B-7D3D-CEB3-C771-714842076140}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_gui_extra\misc">
+      <UniqueIdentifier>{08BBBECB-B0D1-7611-37EC-F57E1D0CE2A2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_gui_extra\native">
+      <UniqueIdentifier>{268E8F2A-980C-BF2F-B161-AACABC9D91F3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_gui_extra">
+      <UniqueIdentifier>{A4D76113-9EDC-DA60-D89B-5BACF7F1C426}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules">
       <UniqueIdentifier>{FE955B6B-68AC-AA07-70D8-2413F6DB65C8}</UniqueIdentifier>
     </Filter>
@@ -1372,6 +1390,111 @@
     <ClCompile Include="C:\JUCE\modules\juce_gui_basics\juce_gui_basics.mm">
       <Filter>JUCE Modules\juce_gui_basics</Filter>
     </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\code_editor\juce_CodeDocument.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\code_editor</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\code_editor\juce_CodeEditorComponent.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\code_editor</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\code_editor\juce_CPlusPlusCodeTokeniser.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\code_editor</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\code_editor\juce_LuaCodeTokeniser.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\code_editor</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\code_editor\juce_XMLCodeTokeniser.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\code_editor</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\documents\juce_FileBasedDocument.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\documents</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\misc\juce_AnimatedAppComponent.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\misc\juce_BubbleMessageComponent.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\misc\juce_ColourSelector.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\misc\juce_KeyMappingEditorComponent.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\misc\juce_LiveConstantEditor.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\misc\juce_PreferencesPanel.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\misc\juce_PushNotifications.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\misc\juce_RecentlyOpenedFilesList.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\misc\juce_SplashScreen.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\misc\juce_SystemTrayIconComponent.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\native\juce_android_PushNotifications.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\native\juce_android_WebBrowserComponent.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\native\juce_AndroidViewComponent.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\native\juce_ios_PushNotifications.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\native\juce_ios_UIViewComponent.mm">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\native\juce_linux_X11_SystemTrayIcon.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\native\juce_linux_X11_WebBrowserComponent.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\native\juce_linux_XEmbedComponent.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\native\juce_mac_AppleRemote.mm">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\native\juce_mac_NSViewComponent.mm">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\native\juce_mac_PushNotifications.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\native\juce_mac_SystemTrayIcon.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\native\juce_mac_WebBrowserComponent.mm">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\native\juce_win32_ActiveXComponent.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\native\juce_win32_HWNDComponent.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\native\juce_win32_SystemTrayIcon.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\native\juce_win32_WebBrowserComponent.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\juce_gui_extra.cpp">
+      <Filter>JUCE Modules\juce_gui_extra</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\JUCE\modules\juce_gui_extra\juce_gui_extra.mm">
+      <Filter>JUCE Modules\juce_gui_extra</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_core.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
@@ -1385,6 +1508,9 @@
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_basics.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_extra.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2513,6 +2639,93 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\..\..\..\Applications\JUCE\modules\juce_gui_basics\juce_gui_basics.h">
       <Filter>JUCE Modules\juce_gui_basics</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\code_editor\juce_CodeDocument.h">
+      <Filter>JUCE Modules\juce_gui_extra\code_editor</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\code_editor\juce_CodeEditorComponent.h">
+      <Filter>JUCE Modules\juce_gui_extra\code_editor</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\code_editor\juce_CodeTokeniser.h">
+      <Filter>JUCE Modules\juce_gui_extra\code_editor</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\code_editor\juce_CPlusPlusCodeTokeniser.h">
+      <Filter>JUCE Modules\juce_gui_extra\code_editor</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\code_editor\juce_CPlusPlusCodeTokeniserFunctions.h">
+      <Filter>JUCE Modules\juce_gui_extra\code_editor</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\code_editor\juce_LuaCodeTokeniser.h">
+      <Filter>JUCE Modules\juce_gui_extra\code_editor</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\code_editor\juce_XMLCodeTokeniser.h">
+      <Filter>JUCE Modules\juce_gui_extra\code_editor</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\documents\juce_FileBasedDocument.h">
+      <Filter>JUCE Modules\juce_gui_extra\documents</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\embedding\juce_ActiveXControlComponent.h">
+      <Filter>JUCE Modules\juce_gui_extra\embedding</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\embedding\juce_AndroidViewComponent.h">
+      <Filter>JUCE Modules\juce_gui_extra\embedding</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\embedding\juce_HWNDComponent.h">
+      <Filter>JUCE Modules\juce_gui_extra\embedding</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\embedding\juce_NSViewComponent.h">
+      <Filter>JUCE Modules\juce_gui_extra\embedding</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\embedding\juce_ScopedDPIAwarenessDisabler.h">
+      <Filter>JUCE Modules\juce_gui_extra\embedding</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\embedding\juce_UIViewComponent.h">
+      <Filter>JUCE Modules\juce_gui_extra\embedding</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\embedding\juce_XEmbedComponent.h">
+      <Filter>JUCE Modules\juce_gui_extra\embedding</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\misc\juce_AnimatedAppComponent.h">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\misc\juce_AppleRemote.h">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\misc\juce_BubbleMessageComponent.h">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\misc\juce_ColourSelector.h">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\misc\juce_KeyMappingEditorComponent.h">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\misc\juce_LiveConstantEditor.h">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\misc\juce_PreferencesPanel.h">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\misc\juce_PushNotifications.h">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\misc\juce_RecentlyOpenedFilesList.h">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\misc\juce_SplashScreen.h">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\misc\juce_SystemTrayIconComponent.h">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\misc\juce_WebBrowserComponent.h">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\JUCE\modules\juce_gui_extra\native\juce_mac_CarbonViewWrapperComponent.h">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\..\Applications\JUCE\modules\juce_gui_extra\juce_gui_extra.h">
+      <Filter>JUCE Modules\juce_gui_extra</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h">
       <Filter>JUCE Library Code</Filter>

@@ -32,6 +32,16 @@ MainComponent::MainComponent()
     //set default window size
     setSize(800, 600);
     
+    //current Angle at begining of phase
+    currentAngle1 = 0;
+    currentAngle2 = 0;
+    currentAngle3 = 0;
+    
+    //current Sample at begining
+    currentSample1 = 0;
+    currentSample2 = 0;
+    currentSample3 = 0;
+    
     //silent at first
     audible = false;
 
@@ -43,6 +53,8 @@ MainComponent::~MainComponent()
 {
     // This shuts down the audio device and clears the audio source.
     nBar.removeChangeListener(this);
+    save_button.removeListener(this);
+    test_audio.removeListener(this);
     shutdownAudio();
 }
 
@@ -68,17 +80,21 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
 {
     //play audio when button is pressed
     if(audible){
+        updateAngle1Delta();
+        updateAngle2Delta();
+        updateAngle3Delta();
         //fill buffer with random noise
-     for (auto channel = 0; channel < bufferToFill.buffer->getNumChannels(); ++channel)
-        {
-            // Get a pointer to the start sample in the buffer for this audio output channel
-            auto* buffer = bufferToFill.buffer->getWritePointer (channel, bufferToFill.startSample);
- 
-            // Fill the required number of samples with noise between -0.125 and +0.125
-            for (auto sample = 0; sample < bufferToFill.numSamples; ++sample){
-                buffer[sample] = random.nextFloat() * 0.1f - 0.125f;
-//
-            }
+        
+
+        // Get a pointer to the start sample in the buffer for this audio output channel
+        auto* leftBuffer  = bufferToFill.buffer->getWritePointer (0, bufferToFill.startSample);
+        auto* rightBuffer = bufferToFill.buffer->getWritePointer (1, bufferToFill.startSample);
+
+        // Fill the required number of samples with noise between -0.125 and +0.125
+        for (auto sample = 0; sample < bufferToFill.numSamples; ++sample){
+            auto currentSample = synth();
+            leftBuffer[sample] = currentSample;
+            rightBuffer[sample] = currentSample;
         }
     }
     else{
@@ -112,7 +128,7 @@ void MainComponent::resized()
     //get the local area
     auto area = getLocalBounds();
     
-    auto nav_width = getWidth() < 175 ? getWidth() /3 : 175;
+    auto nav_width = getWidth() < 160 ? getWidth() /3 : 160;
     
     //set areas of things
     nBar.setBounds(area.removeFromLeft(nav_width));
@@ -178,17 +194,16 @@ void MainComponent::buttonClicked (juce::Button* button)
                     juce::AudioBuffer<float> write_buffer;
                     write_buffer.setSize(2,sample_rate*10);
                     
-                    for (int channel = 0; channel < write_buffer.getNumChannels(); ++channel)
-                            {
-                                // Get a pointer to the start sample in the buffer for this audio output channel
-                                auto* buffer = write_buffer.getWritePointer (channel, 0);
+                    // Get a pointer to the start sample in the buffer for this audio output channel
+                    auto* leftBuffer  = write_buffer.getWritePointer (0, 0);
+                    auto* rightBuffer = write_buffer.getWritePointer (1, 0);
 
-                                // Fill the required number of samples with noise between -0.125 and +0.125
-                                for (auto sample = 0; sample < write_buffer.getNumSamples(); ++sample){
-                                    buffer[sample] = random.nextFloat() * 0.1f - 0.125f;
-
-                                }
-                            }
+                    // Fill the required number of samples with noise between -0.125 and +0.125
+                    for (auto sample = 0; sample < write_buffer.getNumSamples(); ++sample){
+                        auto currentSample = synth();
+                        leftBuffer[sample] = currentSample;
+                        rightBuffer[sample] = currentSample;
+                    }
         
                     juce::WavAudioFormat format;
                     std::unique_ptr<juce::AudioFormatWriter> writer;
@@ -205,3 +220,107 @@ void MainComponent::buttonClicked (juce::Button* button)
             
         }
     }
+    
+
+    void MainComponent::updateAngle1Delta()
+        {
+            auto cyclesPerSample = oMenu.osc1_frequency.getValue() / sample_rate;         // [2]
+            angleDelta1 = cyclesPerSample * 2.0 * juce::MathConstants<double>::pi;          // [3]
+        }
+
+    void MainComponent::updateAngle2Delta()
+    {
+        auto cyclesPerSample = oMenu.osc2_frequency.getValue() / sample_rate;         // [2]
+        angleDelta2 = cyclesPerSample * 2.0 * juce::MathConstants<double>::pi;          // [3]
+    }
+
+    void MainComponent::updateAngle3Delta()
+    {
+        auto cyclesPerSample = oMenu.osc3_frequency.getValue() / sample_rate;         // [2]
+        angleDelta3 = cyclesPerSample * 2.0 * juce::MathConstants<double>::pi;          // [3]
+    }
+
+    float MainComponent::synth(){
+        
+        auto gain_total = juce::Decibels::decibelsToGain(aMenu.amp_total_gain.getValue());
+        auto audio = osc();
+        
+        return (float) audio * gain_total;
+
+    }
+
+    float MainComponent::osc(){
+        
+        //update current angles
+        currentAngle1 += angleDelta1;
+        currentAngle2 += angleDelta2;
+        currentAngle3 += angleDelta3;
+        
+        //update current samples
+        currentSample1++;
+        currentSample2++;
+        currentSample3++;
+        
+        auto gain1 = juce::Decibels::decibelsToGain(oMenu.osc1_gain.getValue());
+        auto gain2 = juce::Decibels::decibelsToGain(oMenu.osc2_gain.getValue());
+        auto gain3 = juce::Decibels::decibelsToGain(oMenu.osc3_gain.getValue());
+        
+        float audio = 0;
+        //add oscilator 1
+        switch(oMenu.osc1_wav_shape.getSelectedId()){
+            case 1:
+                audio += std::sin (currentAngle1)*gain1;
+                break;
+            case 2:
+                audio += (-2 / juce::MathConstants<double>::pi * std::atan(1 / std::tan(oMenu.osc1_frequency.getValue() *juce::MathConstants<double>::pi* currentSample1/sample_rate)))*gain1;
+                break;
+            case 3:
+                audio += std::sin (currentAngle1) > 0 ? 1*gain1 : -1*gain1;
+                break;
+            case 4:
+                audio += (2 / juce::MathConstants<double>::pi * std::asin(std::sin(currentAngle1)))*gain1;
+                break;
+            case 5:
+                audio += (0.5*random.nextFloat()-1)*gain1;
+        }
+        
+        
+        //add oscilator 2
+        switch(oMenu.osc2_wav_shape.getSelectedId()){
+            case 1:
+                audio += std::sin (currentAngle2)*gain2;
+                break;
+            case 2:
+                audio += (-2 / juce::MathConstants<double>::pi * std::atan(1 / std::tan(oMenu.osc2_frequency.getValue() *juce::MathConstants<double>::pi* currentSample2/sample_rate)))*gain2;
+                break;
+            case 3:
+                audio += std::sin (currentAngle2) > 0 ? 1*gain2 : -1*gain2;
+                break;
+            case 4:
+                audio += (2 / juce::MathConstants<double>::pi * std::asin(std::sin(currentAngle2)))*gain2;
+                break;
+            case 5:
+                audio += (0.5*random.nextFloat()-1)*gain2;
+        }
+        
+        //add oscilator 3
+        switch(oMenu.osc3_wav_shape.getSelectedId()){
+            case 1:
+                audio += std::sin (currentAngle3)*gain3;
+                break;
+            case 2:
+                audio += (-2 / juce::MathConstants<double>::pi * std::atan(1 / std::tan(oMenu.osc3_frequency.getValue() *juce::MathConstants<double>::pi* currentSample3/sample_rate)))*gain3;
+                break;
+            case 3:
+                audio += std::sin (currentAngle3) > 0 ? 1*gain3 : -1*gain3;
+                break;
+            case 4:
+                audio += (2 / juce::MathConstants<double>::pi * std::asin(std::sin(currentAngle3)))*gain3;
+                break;
+            case 5:
+                audio += (0.5*random.nextFloat()-1)*gain3;
+        }
+        return audio;
+        
+    }
+

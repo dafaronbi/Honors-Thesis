@@ -29,6 +29,10 @@
 			isa = PBXBuildFile;
 			fileRef = 6757CE9CD2BA54726A9BC79F;
 		};
+		160A1E32C0DF851463F2FB0F = {
+			isa = PBXBuildFile;
+			fileRef = 4BFA322566CCAF7751E56119;
+		};
 		C94027FCED119B8C2AFE0088 = {
 			isa = PBXBuildFile;
 			fileRef = 6EEA17454BABECF941E09231;
@@ -60,6 +64,10 @@
 		24504A6D60E8A4B10032F80B = {
 			isa = PBXBuildFile;
 			fileRef = 02E03D2931F96CB63F5F890F;
+		};
+		780AE4734BE1C7E32F741B95 = {
+			isa = PBXBuildFile;
+			fileRef = ED6B208693423B4E114ED934;
 		};
 		02E03D2931F96CB63F5F890F = {
 			isa = PBXFileReference;
@@ -109,6 +117,13 @@
 			name = "include_juce_core.mm";
 			path = "../../JuceLibraryCode/include_juce_core.mm";
 			sourceTree = "SOURCE_ROOT";
+		};
+		4BFA322566CCAF7751E56119 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = WebKit.framework;
+			path = System/Library/Frameworks/WebKit.framework;
+			sourceTree = SDKROOT;
 		};
 		57BD20DF21578F27E985418B = {
 			isa = PBXFileReference;
@@ -201,11 +216,25 @@
 			path = "Info-App.plist";
 			sourceTree = "SOURCE_ROOT";
 		};
+		CA5111BCD047493C7116A106 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_gui_extra";
+			path = "/Applications/JUCE/modules/juce_gui_extra";
+			sourceTree = "<absolute>";
+		};
 		DB3BC0B8D3F2EF8168743DD4 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = MainComponent.cpp;
 			path = ../../Source/MainComponent.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		ED6B208693423B4E114ED934 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.objcpp;
+			name = "include_juce_gui_extra.mm";
+			path = "../../JuceLibraryCode/include_juce_gui_extra.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
 		FA958841376A89F4C5F475CF = {
@@ -241,6 +270,7 @@
 				6FDB53B0A8F7621D1CECE5A6,
 				277103E016B20F4262FEBEF7,
 				3EFF566C8D06B4DE1DF7F39F,
+				CA5111BCD047493C7116A106,
 			);
 			name = "JUCE Modules";
 			sourceTree = "<group>";
@@ -253,6 +283,7 @@
 				A751DE33CECE7B389816DE87,
 				15E676B110B63F27217D4772,
 				02E03D2931F96CB63F5F890F,
+				ED6B208693423B4E114ED934,
 				7F326DEC7812100E43BC3C85,
 			);
 			name = "JUCE Library Code";
@@ -275,6 +306,7 @@
 				840F3727991403D019F4E766,
 				951FFB8E30AF6E0B889861DC,
 				6757CE9CD2BA54726A9BC79F,
+				4BFA322566CCAF7751E56119,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -323,6 +355,7 @@
 					"JUCE_MODULE_AVAILABLE_juce_events=1",
 					"JUCE_MODULE_AVAILABLE_juce_graphics=1",
 					"JUCE_MODULE_AVAILABLE_juce_gui_basics=1",
+					"JUCE_MODULE_AVAILABLE_juce_gui_extra=1",
 					"JUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1",
 					"JUCE_STRICT_REFCOUNTEDPOINTER=1",
 					"JUCE_STANDALONE_APPLICATION=1",
@@ -382,6 +415,7 @@
 					"JUCE_MODULE_AVAILABLE_juce_events=1",
 					"JUCE_MODULE_AVAILABLE_juce_graphics=1",
 					"JUCE_MODULE_AVAILABLE_juce_gui_basics=1",
+					"JUCE_MODULE_AVAILABLE_juce_gui_extra=1",
 					"JUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1",
 					"JUCE_STRICT_REFCOUNTEDPOINTER=1",
 					"JUCE_STANDALONE_APPLICATION=1",
@@ -553,6 +587,7 @@
 				C865A8B1DFE07114D3DEE4F6,
 				D8CFE8C2951B7938D971F344,
 				24504A6D60E8A4B10032F80B,
+				780AE4734BE1C7E32F741B95,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +600,7 @@
 				7348BEE033086C3F777C5B52,
 				A61E36E475786CD5826F26A5,
 				6C7BF0573DCC153B3E3448C8,
+				160A1E32C0DF851463F2FB0F,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

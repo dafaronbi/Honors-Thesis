@@ -1,7 +1,7 @@
 #pragma once
-
 #include <JuceHeader.h>
 #include "extraComponents.h"
+#include "sliders.h"
 
 //==============================================================================
 /*
@@ -25,6 +25,11 @@ public:
     void resized() override;
     void changeListenerCallback(juce::ChangeBroadcaster* source) override;
     void buttonClicked (juce::Button* button) override;
+    void updateAngle1Delta();
+    void updateAngle2Delta();
+    void updateAngle3Delta();
+    float synth();
+    float osc();
     
 private:
     //==============================================================================
@@ -40,6 +45,15 @@ private:
     juce::Random random;
     bool audible;
     double sample_rate;
+    double currentAngle1;
+    double currentAngle2;
+    double currentAngle3;
+    double angleDelta1;
+    double angleDelta2;
+    double angleDelta3;
+    double currentSample1;
+    double currentSample2;
+    double currentSample3;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
