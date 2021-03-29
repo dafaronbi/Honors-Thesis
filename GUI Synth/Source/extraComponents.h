@@ -126,7 +126,7 @@ private:
 };
 
 //gui for oscillator menu
-class Oscillator_Menu : public juce::AnimatedAppComponent
+class Oscillator_Menu : public juce::AnimatedAppComponent, public juce::ChangeBroadcaster, public juce::Slider::Listener
 {
 public:
     //create components for oscillator 1
@@ -226,6 +226,18 @@ public:
         addAndMakeVisible(osc3_frequency);
         addAndMakeVisible(osc3_gain);
         
+        //add slider listeners to object
+        osc1_frequency.addListener(this);
+        osc2_frequency.addListener(this);
+        osc3_frequency.addListener(this);
+        
+    }
+    
+    ~Oscillator_Menu(){
+        //remove sliderlisteneres
+        osc1_frequency.removeListener(this);
+        osc2_frequency.removeListener(this);
+        osc3_frequency.removeListener(this);
     }
 
     void update() override
@@ -309,6 +321,15 @@ public:
         fb.performLayout (getLocalBounds().reduced(10).toFloat());
 
     }
+    
+    void sliderValueChanged (juce::Slider* slider) override {
+        
+        //send a message  that slider value is changed
+        sendChangeMessage();
+        
+    }
+    
+    
 
 private:
     
@@ -317,7 +338,7 @@ private:
 };
 
 //gui for filter menu
-class Filter_Menu : public juce::AnimatedAppComponent
+class Filter_Menu : public juce::AnimatedAppComponent, public juce::ChangeBroadcaster, public juce::Slider::Listener, public juce::ComboBox::Listener
 {
 public:
     
@@ -363,12 +384,12 @@ public:
         filter1_cuttoff_freq.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
         filter1_cuttoff_freq.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
         filter1_cuttoff_freq.setTextValueSuffix (" Cutoff Freq (Hz)");
-        filter1_cuttoff_freq.setRange(20, 2000);
+        filter1_cuttoff_freq.setRange(20, 20000);
         
         filter2_cuttoff_freq.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
         filter2_cuttoff_freq.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
         filter2_cuttoff_freq.setTextValueSuffix (" Cutoff Freq (Hz)");
-        filter2_cuttoff_freq.setRange(20, 2000);
+        filter2_cuttoff_freq.setRange(20, 20000);
         
         //set cuttoff freq slider settings
         filter1_resonance.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
@@ -385,22 +406,30 @@ public:
         filter_attack.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
         filter_attack.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
         filter_attack.setTextValueSuffix (" Attack Time (s)");
-        filter_attack.setRange(0, 5);
+        filter_attack.setRange(0, 0.5);
         
         filter_decay.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
         filter_decay.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
         filter_decay.setTextValueSuffix (" Decay Time (s)");
-        filter_decay.setRange(0, 5);
+        filter_decay.setRange(0, 0.5);
         
         filter_sustain.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
         filter_sustain.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
-        filter_sustain.setTextValueSuffix (" Sustain Level (dB)");
-        filter_sustain.setRange(0, 5);
+        filter_sustain.setTextValueSuffix (" Sustain Level (fraction)");
+        filter_sustain.setRange(0, 1);
+        
         
         filter_release.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
         filter_release.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
         filter_release.setTextValueSuffix (" Release Time (s)");
-        filter_release.setRange(0, 5);
+        filter_release.setRange(0, 1);
+        
+        //set sustain level to be 1
+        filter_sustain.setValue(1);
+        
+        //set filter values
+        filter1_cuttoff_freq.setValue(20000);
+        filter2_cuttoff_freq.setValue(20000);
         
         
         
@@ -419,6 +448,31 @@ public:
         addAndMakeVisible(filter_decay);
         addAndMakeVisible(filter_sustain);
         addAndMakeVisible(filter_release);
+        
+        //add slider listeners
+        filter1_cuttoff_freq.addListener(this);
+        filter2_cuttoff_freq.addListener(this);
+        filter1_type.addListener(this);
+        filter2_type.addListener(this);
+        filter1_resonance.addListener(this);
+        filter2_resonance.addListener(this);
+        filter_attack.addListener(this);
+        filter_decay.addListener(this);
+        filter_sustain.addListener(this);
+        filter_release.addListener(this);
+    }
+    
+    ~Filter_Menu(){
+        //remove slider listeners
+        filter1_cuttoff_freq.removeListener(this);
+        filter2_cuttoff_freq.removeListener(this);
+        filter1_resonance.removeListener(this);
+        filter2_resonance.removeListener(this);
+        filter_attack.removeListener(this);
+        filter_decay.removeListener(this);
+        filter_sustain.removeListener(this);
+        filter_release.removeListener(this);
+        
     }
 
     void update() override
@@ -501,6 +555,17 @@ public:
         
         fb.performLayout (getLocalBounds().reduced(10).toFloat());
     }
+    
+    void sliderValueChanged (juce::Slider* slider) override {
+        //send a message  that slider value is changed
+        sendChangeMessage();
+    }
+    
+    void comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged) override{
+        //send a message that combobox has changed
+        sendChangeMessage();
+    }
+    
 
 private:
     
@@ -509,7 +574,7 @@ private:
 };
 
 //gui for amplifier menu
-class amplifier_Menu : public juce::AnimatedAppComponent
+class amplifier_Menu : public juce::AnimatedAppComponent, public juce::ChangeBroadcaster, public juce::Slider::Listener
 {
 public:
     //create components for amplifier
@@ -536,22 +601,34 @@ public:
         amp_attack.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
         amp_attack.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
         amp_attack.setTextValueSuffix (" Attack Time (s)");
-        amp_attack.setRange(0, 5);
+        amp_attack.setRange(0, 0.5);
         
         amp_decay.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
         amp_decay.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100,50);
         amp_decay.setTextValueSuffix (" Decay Time (s)");
-        amp_decay.setRange(0, 5);
+        amp_decay.setRange(0, 0.5);
         
         amp_sustain.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
         amp_sustain.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
-        amp_sustain.setTextValueSuffix (" Sustain Level (dB)");
-        amp_sustain.setRange(0, 5);
+        amp_sustain.setTextValueSuffix (" Sustain Level (fraction)");
+        amp_sustain.setRange(0, 1);
         
         amp_release.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
         amp_release.setTextBoxStyle (juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 100, 50);
         amp_release.setTextValueSuffix (" Release Time (s)");
-        amp_release.setRange(0, 5);
+        amp_release.setRange(0, 1);
+        
+        //set sustain level to be 1
+        amp_sustain.setValue(1);
+        
+        
+        
+        //listen to slider change values
+        amp_total_gain.addListener(this);
+        amp_attack.addListener(this);
+        amp_decay.addListener(this);
+        amp_sustain.addListener(this);
+        amp_release.addListener(this);
         
                                    
         //add child components
@@ -626,6 +703,11 @@ public:
         
         fb.performLayout (getLocalBounds().reduced(10).toFloat());
 
+    }
+    
+    void sliderValueChanged (juce::Slider* slider) override {
+        //send a message  that slider value is changed
+        sendChangeMessage();
     }
 
 private:
